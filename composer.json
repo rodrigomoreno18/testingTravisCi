@@ -1,0 +1,11 @@
+{
+	"name": "rodra/traviscl",
+	"require": {
+		"phpunit/phpunit": "^5.5"
+	},
+	"autoload": {
+		"psr-4": {
+			"Tarj\\": "src"
+		}
+	}
+}
