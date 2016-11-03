@@ -19,10 +19,9 @@ class Tarjetita implements Tarjeta {
 	protected $valorBici = 12;
 	
 	public function __construct() {
-		$this->plus = 2;
 		$this->descuento = 1;
+		$this->plus = 2;
 		$this->id = rand(100000, 999999);
-
 	}
 
 	public function pagar(Transporte $transporte, $fecha_y_hora) {
@@ -46,9 +45,8 @@ class Tarjetita implements Tarjeta {
 				$monto = round($monto * 0.33, 2);
 
 			if ($this->saldo-$monto < 0 && $this->plus > 0) {
-				print ("Viaje PLUS #" . $this->plus . ".\n");
+				print ("Usando viaje PLUS #" . $this->plus . ".\n");
 				$this->plus -= 1;
-
 			}
 			else if ($this->plus <= 0 && $monto!=0) {
 				print ("Saldo insuficiente.\n");
