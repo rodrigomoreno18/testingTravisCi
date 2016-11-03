@@ -27,6 +27,8 @@ class Tarjetita implements Tarjeta {
 
 	public function pagar(Transporte $transporte, $fecha_y_hora) {
 
+		$monto = 0;
+
 		if ($transporte->getTipo() == "Colectivo") {
 			
 			$trasbordo = false;
