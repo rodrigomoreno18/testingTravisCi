@@ -79,7 +79,7 @@ class TarjetitaTest extends TestCase {
 		$this->tarjetaAlternativa = new Tarjetita();
 		$this->tarjetaAlternativa->recargar(4);
 		$saldoInicial = $this->tarjetaAlternativa->getSaldo();
-		$this->tarjetaAlternativa->pagar($this->colectivo, "12/03/16 18:32");
+		$this->tarjetaAlternativa->pagar($this->colectivo, "12/03/16 18:12");
 		$this->assertEquals($saldoInicial, $this->tarjetaAlternativa->getSaldo());
 		$this->assertEquals(1, $this->tarjetaAlternativa->getPlus());
 
@@ -91,11 +91,11 @@ class TarjetitaTest extends TestCase {
 
 		// probando que no se pueda seguir pagando colectivo luego de 2 plus
 		print ("--Viaje PLUS #1:\n");
-		$this->tarjetaAlternativa->pagar($this->colectivo, "12/03/16 22:32");
+		$this->tarjetaAlternativa->pagar($this->colectivo, "12/03/16 22:39");
 		$this->assertEquals(0, $this->tarjetaAlternativa->getPlus());
 		print ("--Viaje Negado:\n");
 		$viajesIniciales = $this->tarjetaAlternativa->getViajesRealizados();
-		$this->tarjetaAlternativa->pagar($this->colectivo, "12/03/16 24:32");
+		$this->tarjetaAlternativa->pagar($this->colectivo, "13/03/16 00:32");
 		$this->assertEquals($viajesIniciales, $this->tarjetaAlternativa->getViajesRealizados());
 	}
 
