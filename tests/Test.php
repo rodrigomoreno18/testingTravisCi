@@ -52,11 +52,29 @@ class TarjetitaTest extends TestCase {
 		$this->tarjeta->recargar(290);
 		$this->assertEquals(340, $this->tarjeta->getSaldo() - $saldoInicial);
 
+		// probando cargar la tarjeta con otro monto especial
+		print ("--Cargando 544:\n");
+		$saldoInicial = $this->tarjeta->getSaldo();
+		$this->tarjeta->recargar(544);
+		$this->assertEquals(680, $this->tarjeta->getSaldo() - $saldoInicial);
+
 		// probando un boleto comun
 		print ("--Normal:\n");
 		$saldoInicial = $this->tarjeta->getSaldo();
 		$this->tarjeta->pagar($this->colectivo, "21-09-16 16:00");
 		$this->assertEquals($saldoInicial-8.5, $this->tarjeta->getSaldo());
+
+		// probando un trasbordo
+		print ("--Trasbordo:\n");
+		$saldoInicial = $this->tarjeta->getSaldo();
+		$this->tarjeta->pagar($this->colectivo, "21-09-16 16:31");
+		$this->assertEquals($saldoInicial-8.5, $this->tarjeta->getSaldo());
+
+		// probando una bicicleta
+		print ("--Bicicleta:\n");
+		$saldoInicial = $this->tarjeta->getSaldo();
+		$this->tarjeta->pagar($this->bicicleta, "21-09-16 16:50");
+		$this->assertEquals($saldoInicial-12, $this->tarjeta->getSaldo());
 
 		// probando el pase libre
 		print ("--Libre:\n");
