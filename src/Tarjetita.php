@@ -4,8 +4,8 @@ namespace Tarj;
 interface Tarjeta {
 	public function pagar(Transporte $transporte, $fecha_y_hora);
 	public function recargar($monto);
-	public function saldo();
-	public function viajesRealizados();
+	public function getSaldo();
+	public function getViajesRealizados();
 }
 
 
@@ -26,7 +26,7 @@ class Tarjetita implements Tarjeta {
 
 	public function pagar(Transporte $transporte, $fecha_y_hora) {
 
-		if ($transporte->tipo() == "Colectivo") {
+		if ($transporte->getTipo() == "Colectivo") {
 			
 			$trasbordo = false;
 
@@ -47,23 +47,23 @@ class Tarjetita implements Tarjeta {
 				$this->plus -= 1;
 
 			}
-			else if ($this->plus <= 0) {
+			else if ($this->plus <= 0 && $monto!=0) {
 				print ("Saldo insuficiente.\n");
 				return;
 			}
 			else
 				$this->saldo -= $monto;
 
-			array_push($this->viajes, new Boleto($fecha_y_hora, $transporte->tipo(), $transporte->linea(), $this->saldo, $this->id);
+			array_push($this->viajes, new Boleto($fecha_y_hora, $transporte->getTipo(), $transporte->linea(), $this->saldo, $this->id);
 		
-		} else if ($transporte->tipo() == "Bici") {
+		} else if ($transporte->getTipo() == "Bici") {
 			if ($this->saldo-$monto < 0) {
 				print ("Saldo insuficiente.\n");
 				return;
 			}
 
 			$this->saldo -= $this->valorBici;
-			array_push($this->viajes, new Boleto($fecha_y_hora, $transporte->tipo(), $transporte->patente(), $this->saldo, $this->id));
+			array_push($this->viajes, new Boleto($fecha_y_hora, $transporte->getTipo(), $transporte->getPatente(), $this->saldo, $this->id));
 		}
 
 		print ("Costo del boleto: $" . $monto . "\n");
@@ -82,11 +82,15 @@ class Tarjetita implements Tarjeta {
 		$this->plus = 2;
 	}
 
-	public function saldo() {
+	public function getSaldo() {
 		return $this->saldo;
 	}
 
-	public function viajesRealizados() {
+	public function getPlus() {
+		return $this->plus;
+	}
+
+	public function getViajesRealizados() {
 		return $this->viajes;
 	}
 }

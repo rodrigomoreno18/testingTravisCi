@@ -12,7 +12,7 @@ class Colectivo extends Transporte {
 		$this->empresa = $empresa;
 	}
 
-	public function linea() {
+	public function getLinea() {
 		return $this->linea;
 	}
 }

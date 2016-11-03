@@ -10,7 +10,7 @@ class Bici extends Transporte {
 		$this->patente = $patente;
 	}
 
-	public function Nombre() {
+	public function getPatente() {
 		return $this->patente;
 	}
 }
