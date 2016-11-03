@@ -12,33 +12,61 @@ interface Tarjeta {
 class Tarjetita implements Tarjeta {
 	private $viajes = [];
 	private $saldo = 0;
+	private $id;
+	private $plus;
 	protected $descuento;
+	protected $valorColectivo = 8.5;
+	protected $valorBici = 12;
 	
 	public function __construct() {
 		$this->descuento = 1;
+		$this->id = rand(100000, 999999);
+
 	}
 
 	public function pagar(Transporte $transporte, $fecha_y_hora) {
+
 		if ($transporte->tipo() == "Colectivo") {
+			
 			$trasbordo = false;
+
 			if (count($this->viajes) > 0) {
 				if (end($this->viajes)->tiempo() - strtotime($fecha_y_hora) < 3600) {
 					$trasbordo = true;
 				}
 			}
 
-			$monto = 0;
-			if ($trasbordo)
-				$monto = 2.81*$this->descuento;
-			else
-				$monto = 8.5*$this->descuento;
+			$monto = $this->valorColectivo * $this->descuento;
 
-			array_push($this->viajes, new Viaje($transporte->tipo(), $monto, $transporte, strtotime($fecha_y_hora)));
-			$this->saldo -= $monto;
+
+			if ($trasbordo)
+				$monto = round($monto * 0.33, 2);
+
+			if ($this->saldo-$monto < 0 && $this->plus > 0) {
+				print ("Viaje PLUS #" . $this->plus . ".\n");
+				$this->plus -= 1;
+
+			}
+			else if ($this->plus <= 0) {
+				print ("Saldo insuficiente.\n");
+				return;
+			}
+			else
+				$this->saldo -= $monto;
+
+			array_push($this->viajes, new Boleto($fecha_y_hora, $transporte->tipo(), $transporte->linea(), $this->saldo, $this->id);
+		
 		} else if ($transporte->tipo() == "Bici") {
-			array_push($this->viajes, new Viaje($transporte->tipo(), 12, $transporte, strtotime($fecha_y_hora)));
-			$this->saldo -= 12;
+			if ($this->saldo-$monto < 0) {
+				print ("Saldo insuficiente.\n");
+				return;
+			}
+
+			$this->saldo -= $this->valorBici;
+			array_push($this->viajes, new Boleto($fecha_y_hora, $transporte->tipo(), $transporte->patente(), $this->saldo, $this->id));
 		}
+
+		print ("Costo del boleto: $" . $monto . "\n");
 	}
 
 	public function recargar($monto) {
@@ -48,11 +76,19 @@ class Tarjetita implements Tarjeta {
 			$this->saldo += 680;
 		else
 			$this->saldo += $monto;
+
+		$this->saldo -= $this->valorColectivo*(2-$this->plus);
+
+		$this->plus = 2;
 	}
 
-	public function saldo() { return $this->saldo; }
+	public function saldo() {
+		return $this->saldo;
+	}
 
-	public function viajesRealizados() { return $this->viajes; }
+	public function viajesRealizados() {
+		return $this->viajes;
+	}
 }
 
 ?>

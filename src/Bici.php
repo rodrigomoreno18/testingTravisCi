@@ -6,7 +6,7 @@ class Bici extends Transporte {
 	private $patente;
 
 	public function __construct($patente) {
-		$this->tipo = "bici";
+		$this->tipo = "Bici";
 		$this->patente = $patente;
 	}
 
