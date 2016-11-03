@@ -48,7 +48,7 @@ class Tarjetita implements Tarjeta {
 				print ("Usando viaje PLUS #" . $this->plus . ".\n");
 				$this->plus -= 1;
 			}
-			else if ($this->plus <= 0 && $monto!=0) {
+			else if ($this->plus <= 0) {
 				print ("Saldo insuficiente.\n");
 				return;
 			}
