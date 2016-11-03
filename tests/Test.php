@@ -18,7 +18,7 @@ class TarjetitaTest extends TestCase {
 	}
 
 	public function testColectivo() {
-		$cole = $this->colectivo->linea();
+		$cole = $this->colectivo->getLinea();
 		$this->assertEquals("146 Rojo", $cole);
 	}
 
