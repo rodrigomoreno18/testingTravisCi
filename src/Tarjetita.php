@@ -60,6 +60,8 @@ class Tarjetita implements Tarjeta {
 			array_push($this->viajes, new Boleto($fecha_y_hora, $transporte->getTipo(), $transporte->getLinea(), $this->saldo, $this->id));
 		
 		} else if ($transporte->getTipo() == "Bici") {
+			$monto = $this->valorBici;
+
 			if ($this->saldo-$monto < 0) {
 				print ("Saldo insuficiente.\n");
 				return;
