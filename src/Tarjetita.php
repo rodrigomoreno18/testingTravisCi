@@ -10,10 +10,10 @@ interface Tarjeta {
 
 
 class Tarjetita implements Tarjeta {
-	private $viajes = [];
-	private $saldo = 0;
-	private $id;
-	private $plus;
+	protected $viajes = [];
+	protected $saldo = 0;
+	protected $id;
+	protected $plus;
 	protected $descuento;
 	protected $valorColectivo = 8.5;
 	protected $valorBici = 12;
