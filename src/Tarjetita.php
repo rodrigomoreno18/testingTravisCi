@@ -34,7 +34,7 @@ class Tarjetita implements Tarjeta {
 			$trasbordo = false;
 
 			if (count($this->viajes) > 0) {
-				if (end($this->viajes)->getFecha() - strtotime($fecha_y_hora) < 3600) {
+				if (end($this->viajes)->getFecha() - strtotime($fecha_y_hora) < 3600 && end($this->viajes)->getTipo() == "Colectivo") {
 					$trasbordo = true;
 				}
 			}
@@ -75,16 +75,26 @@ class Tarjetita implements Tarjeta {
 	}
 
 	public function recargar($monto) {
-		if ($monto == 290)
+		if ($monto == 290) {
 			$this->saldo += 340;
-		else if ($monto == 544)
+			print ("Recargados $340\n");
+		}
+		else if ($monto == 544) {
 			$this->saldo += 680;
-		else
+			print ("Recargados $680\n");
+		}
+		else {
 			$this->saldo += $monto;
+			print ("Recargados $" . $monto . "\n");
+		}
 
 		$this->saldo -= $this->valorColectivo*(2-$this->plus);
 
+		print ("Descontados $" . $this->valorColectivo*(2-$this->plus) . " de viajes PLUS.\n");
+
 		$this->plus = 2;
+
+		print ("Saldo actual: $" . $this->saldo . "\n");
 	}
 
 	public function getSaldo() {
