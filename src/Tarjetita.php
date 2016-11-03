@@ -19,6 +19,7 @@ class Tarjetita implements Tarjeta {
 	protected $valorBici = 12;
 	
 	public function __construct() {
+		$this->plus = 2;
 		$this->descuento = 1;
 		$this->id = rand(100000, 999999);
 
