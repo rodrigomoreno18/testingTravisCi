@@ -72,7 +72,7 @@ class Tarjetita implements Tarjeta {
 	public function recargar($monto) {
 		if ($monto == 290)
 			$this->saldo += 340;
-		else if ($monto = 544)
+		else if ($monto == 544)
 			$this->saldo += 680;
 		else
 			$this->saldo += $monto;
