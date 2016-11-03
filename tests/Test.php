@@ -68,7 +68,7 @@ class TarjetitaTest extends TestCase {
 		print ("--Trasbordo:\n");
 		$saldoInicial = $this->tarjeta->getSaldo();
 		$this->tarjeta->pagar($this->colectivo, "21-09-16 16:31");
-		$this->assertEquals($saldoInicial-8.5, $this->tarjeta->getSaldo());
+		$this->assertEquals($saldoInicial-2.81, $this->tarjeta->getSaldo());
 
 		// probando una bicicleta
 		print ("--Bicicleta:\n");
