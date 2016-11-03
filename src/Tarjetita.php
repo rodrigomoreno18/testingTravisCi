@@ -33,7 +33,7 @@ class Tarjetita implements Tarjeta {
 			$trasbordo = false;
 
 			if (count($this->viajes) > 0) {
-				if (strtotime(end($this->viajes)->getFecha()) - strtotime($fecha_y_hora) < 3600 && end($this->viajes)->getTipo() == "Colectivo") {
+				if (strtotime($fecha_y_hora) - strtotime(end($this->viajes)->getFecha()) < 3600 && end($this->viajes)->getTipo() == "Colectivo") {
 					$trasbordo = true;
 				}
 			}
