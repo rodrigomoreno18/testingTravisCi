@@ -54,7 +54,7 @@ class Tarjetita implements Tarjeta {
 			else
 				$this->saldo -= $monto;
 
-			array_push($this->viajes, new Boleto($fecha_y_hora, $transporte->getTipo(), $transporte->linea(), $this->saldo, $this->id);
+			array_push($this->viajes, new Boleto($fecha_y_hora, $transporte->getTipo(), $transporte->linea(), $this->saldo, $this->id));
 		
 		} else if ($transporte->getTipo() == "Bici") {
 			if ($this->saldo-$monto < 0) {
