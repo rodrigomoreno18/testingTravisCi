@@ -43,11 +43,11 @@ class Tarjetita implements Tarjeta {
 						// si pasaron menos de 60min
 						if (strtotime($timestamp)-strtotime(end($this->viajes)->getFecha())<=3600) {
 							// si es lunes a viernes entre las 6 y 22
-							if (in_range(get_day($timestamp), 1, 5) && in_range(get_time($timestamp), 6, 22)) {
+							if (in_range(get_day($timestamp), 1, 5) && in_range(get_time($timestamp), 6, 21)) {
 								$trasbordo = true;
 							}
 							// si es sabado entre las 6 y 14
-							else if (get_day($timestamp)==6 && in_range(get_time($timestamp), 6, 14)) {
+							else if (get_day($timestamp)==6 && in_range(get_time($timestamp), 6, 13)) {
 								$trasbordo = true;
 							}
 						}
@@ -58,11 +58,11 @@ class Tarjetita implements Tarjeta {
 								$trasbordo = true;
 							}
 							// si es sabado de 14 a 22
-							else if (get_day($timestamp)==6 && in_range(get_time($timestamp), 14, 22)) {
+							else if (get_day($timestamp)==6 && in_range(get_time($timestamp), 14, 21)) {
 								$trasbordo = true;
 							}
 							// si es domingo de 6 a 22 (la de feriados te la regalo)
-							else if (get_day($timestamp)==0 && in_range(get_time($timestamp), 6, 22)) {
+							else if (get_day($timestamp)==0 && in_range(get_time($timestamp), 6, 21)) {
 								$trasbordo = true;
 							}
 						}
