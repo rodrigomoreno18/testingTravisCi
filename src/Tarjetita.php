@@ -54,7 +54,7 @@ class Tarjetita implements Tarjeta {
 						// si pasaron menos de 90min
 						if (strtotime($timestamp)-strtotime(end($this->viajes)->getFecha())<=5400) {
 							// si es de noche (de 22 a 6)
-							if (!in_range(get_time($timestamp), 6, 22)) {
+							if (!in_range(get_time($timestamp), 6, 21)) {
 								$trasbordo = true;
 							}
 							// si es sabado de 14 a 22

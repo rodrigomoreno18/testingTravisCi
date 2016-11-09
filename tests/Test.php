@@ -66,8 +66,9 @@ class TarjetitaTest extends TestCase {
 
 		// probando un trasbordo
 		print ("--Trasbordo:\n");
+		$this->colectivo = new Colectivo("129 Rojo", "Rosario Bus");
 		$saldoInicial = $this->tarjeta->getSaldo();
-		$this->tarjeta->pagar($this->colectivo, "21-09-2016 16:31");
+		$this->tarjeta->pagar($this->colectivo, "21-09-2016 16:21");
 		$this->assertEquals($saldoInicial-2.81, $this->tarjeta->getSaldo());
 
 		// probando una bicicleta
