@@ -43,26 +43,26 @@ class Tarjetita implements Tarjeta {
 						// si pasaron menos de 60min
 						if (strtotime($timestamp)-strtotime(end($this->viajes)->getFecha())<=3600) {
 							// si es lunes a viernes entre las 6 y 22
-							if (in_range(get_day($timestamp), 1, 5) && in_range(get_time($timestamp), 6, 21)) {
+							if ($this->in_range($this->get_day($timestamp), 1, 5) && $this->in_range($this->get_time($timestamp), 6, 21)) {
 								$trasbordo = true;
 							}
 							// si es sabado entre las 6 y 14
-							else if (get_day($timestamp)==6 && in_range(get_time($timestamp), 6, 13)) {
+							else if ($this->get_day($timestamp)==6 && $this->in_range($this->get_time($timestamp), 6, 13)) {
 								$trasbordo = true;
 							}
 						}
 						// si pasaron menos de 90min
 						if (strtotime($timestamp)-strtotime(end($this->viajes)->getFecha())<=5400) {
 							// si es de noche (de 22 a 6)
-							if (!in_range(get_time($timestamp), 6, 21)) {
+							if (!$this->in_range($this->get_time($timestamp), 6, 21)) {
 								$trasbordo = true;
 							}
 							// si es sabado de 14 a 22
-							else if (get_day($timestamp)==6 && in_range(get_time($timestamp), 14, 21)) {
+							else if ($this->get_day($timestamp)==6 && $this->in_range($this->get_time($timestamp), 14, 21)) {
 								$trasbordo = true;
 							}
 							// si es domingo de 6 a 22 (la de feriados te la regalo)
-							else if (get_day($timestamp)==0 && in_range(get_time($timestamp), 6, 21)) {
+							else if ($this->get_day($timestamp)==0 && $this->in_range($this->get_time($timestamp), 6, 21)) {
 								$trasbordo = true;
 							}
 						}
@@ -139,14 +139,14 @@ class Tarjetita implements Tarjeta {
 		return $this->viajes;
 	}
 
-	private function in_range($num, $min, $max) {
+	private function in_range ($num, $min, $max) {
 		if ($num >= $min && $num <= $max)
 			return true;
 	}
-	private function get_day($timestamp) {
+	private function get_day ($timestamp) {
 		return getdate($timestamp)["wday"];
 	}
-	private function get_time($timestamp) {
+	private function get_time ($timestamp) {
 		return getdate()["hours"];
 	}
 }
