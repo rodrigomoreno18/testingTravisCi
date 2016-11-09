@@ -32,9 +32,41 @@ class Tarjetita implements Tarjeta {
 			
 			$trasbordo = false;
 
+			$timestamp = strtotime($fecha_y_hora);
+
+			// si no es el primer viaje
 			if (count($this->viajes) > 0) {
-				if (strtotime($fecha_y_hora) - strtotime(end($this->viajes)->getFecha()) < 3600 && end($this->viajes)->getTipo() == "Colectivo") {
-					$trasbordo = true;
+				// si es un colectivo
+				if (end($this->viajes)->getTipo()=="Colectivo") {
+					// si no es la misma linea
+					if (end($this->viajes)->getLinea()!=$transporte->getLinea()) {
+						// si pasaron menos de 60min
+						if (strtotime($timestamp)-strtotime(end($this->viajes)->getFecha())<=3600) {
+							// si es lunes a viernes entre las 6 y 22
+							if (in_range(get_day($timestamp), 1, 5) && in_range(get_time($timestamp), 6, 22)) {
+								$trasbordo = true;
+							}
+							// si es sabado entre las 6 y 14
+							else if (get_day($timestamp)==6 && in_range(get_time($timestamp), 6, 14)) {
+								$trasbordo = true;
+							}
+						}
+						// si pasaron menos de 90min
+						if (strtotime($timestamp)-strtotime(end($this->viajes)->getFecha())<=5400) {
+							// si es de noche (de 22 a 6)
+							if (!in_range(get_time($timestamp), 6, 22)) {
+								$trasbordo = true;
+							}
+							// si es sabado de 14 a 22
+							else if (get_day($timestamp)==6 && in_range(get_time($timestamp), 14, 22)) {
+								$trasbordo = true;
+							}
+							// si es domingo de 6 a 22 (la de feriados te la regalo)
+							else if (get_day($timestamp)==0 && in_range(get_time($timestamp), 6, 22)) {
+								$trasbordo = true;
+							}
+						}
+					}
 				}
 			}
 
@@ -105,6 +137,17 @@ class Tarjetita implements Tarjeta {
 
 	public function getViajesRealizados() {
 		return $this->viajes;
+	}
+
+	private function in_range($num, $min, $max) {
+		if ($num >= $min && $num <= $max)
+			return true;
+	}
+	private function get_day($timestamp) {
+		return getdate($timestamp)["wday"];
+	}
+	private function get_time($timestamp) {
+		return getdate()["hours"];
 	}
 }
 
